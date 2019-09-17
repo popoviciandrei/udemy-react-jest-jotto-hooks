@@ -1,7 +1,10 @@
 import React from 'react';
+import PropTypes from "prop-types";
 
-export default function Input() {
-    return (
-        <div data-test="component-input"  />
-    )
+const Input = props => (<div data-test="component-input" />)
+
+Input.propTypes = {
+    secretWord: PropTypes.string.isRequired
 }
+
+export default Input;
