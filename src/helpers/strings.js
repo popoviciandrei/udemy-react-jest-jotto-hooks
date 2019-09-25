@@ -9,8 +9,8 @@ const languageStrings = {
     matchingLettersColumnHeader: "Matching Letters"
   },
   emoji: {
-    congrats: "target",
-    submit: "rocket",
+    congrats: "😃",
+    submit: "🚀",
     guessPrompt: "hmm",
     guessInputPlaceholder: "mmmm",
     guessColumnHeader: "don't know",
