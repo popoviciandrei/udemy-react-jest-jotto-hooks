@@ -1,6 +1,6 @@
 const languageStrings = {
   en: {
-    congrats: "Congratulationa! You guessed the word!",
+    congrats: "Congratulations! You guessed the word!",
     submit: "Submit",
     guessPrompt: "Try to guess the secret word!",
     guessInputPlaceholder: "enter guess",
@@ -9,13 +9,13 @@ const languageStrings = {
     matchingLettersColumnHeader: "Matching Letters"
   },
   emoji: {
-    congrats: "😃",
+    congrats: "🎯🎉",
     submit: "🚀",
-    guessPrompt: "hmm",
-    guessInputPlaceholder: "mmmm",
-    guessColumnHeader: "don't know",
-    guessedWords: "don't",
-    matchingLettersColumnHeader: "checked"
+    guessPrompt: "🤔🤫🔤",
+    guessInputPlaceholder: "mmm🤔",
+    guessedWords: "🤷‍🔤",
+    guessColumnHeader: "‍",
+    matchingLettersColumnHeader: "✅"
   }
 };
 
