@@ -1,6 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import languageContext from "./contexts/languageContext";
+import stringsModule from "./helpers/strings";
+
 /**
  * Function react component for congratualtory message.
  * @function
@@ -8,11 +11,14 @@ import PropTypes from "prop-types";
  * @returns {JSX.Element} - Rendered component (or null if `success` prop is false)
  */
 const Congrats = props => {
+  const language = React.useContext(languageContext);
+
   if (props.success) {
     return (
       <div data-test="component-congrats" className="alert alert-success">
         <span data-test="congrats-message">
-          You got it! The secret word is `{props.secretWord}`.
+          {stringsModule.getStringByLanguage(language, "congrats")}
+          {props.secretWord}
         </span>
       </div>
     );
@@ -21,8 +27,7 @@ const Congrats = props => {
       <div
         data-test="component-giveup"
         className="alert alert-danger"
-        role="alert"
-      >
+        role="alert">
         <span data-test="giveup-message">
           The secret word was `{props.secretWord}`<br />
           Better luck next time!

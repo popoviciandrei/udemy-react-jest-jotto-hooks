@@ -14,12 +14,12 @@ const defaultProps = { success: false, secretWord: "" };
  * @param {object} testValues - Component props specific to this setup.
  * @returns {ShallowWrapper}
  */
-const setup = ({ success, language }) => {
+const setup = ({ success, language, ...moreProps }) => {
   language = language || "en";
   success = success || false;
   return mount(
     <languageContext.Provider value={language}>
-      <Congrats success={success} />
+      <Congrats success={success} {...moreProps} />
     </languageContext.Provider>
   );
 };
@@ -36,7 +36,7 @@ describe("languagePicker", () => {
 });
 
 test("renders without error", () => {
-  const wrapper = setup();
+  const wrapper = setup({});
   const component = findByTestAttr(wrapper, "component-congrats");
   expect(component.length).toBe(1);
 });
