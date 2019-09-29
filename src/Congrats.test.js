@@ -1,9 +1,10 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 
-import { findByTestAttr, checkProps } from "../test/testUtils";
+import { findByTestAttr } from "../test/testUtils";
 import Congrats from "./Congrats";
 import languageContext from "./contexts/languageContext";
+import successContext from "./contexts/successContext";
 
 const defaultProps = { success: false, secretWord: "" };
 
@@ -14,12 +15,14 @@ const defaultProps = { success: false, secretWord: "" };
  * @param {object} testValues - Component props specific to this setup.
  * @returns {ShallowWrapper}
  */
-const setup = ({ success, language, ...moreProps }) => {
+const setup = ({ success, language }) => {
   language = language || "en";
   success = success || false;
   return mount(
     <languageContext.Provider value={language}>
-      <Congrats success={success} {...moreProps} />
+      <successContext.SuccessProvider value={[success, jest.fn()]}>
+        <Congrats />
+      </successContext.SuccessProvider>
     </languageContext.Provider>
   );
 };
@@ -41,35 +44,14 @@ test("renders without error", () => {
   expect(component.length).toBe(1);
 });
 
-test("renders no text when `success` prop is false", () => {
+test("renders no text when `success` is false", () => {
   const wrapper = setup({ success: false });
   const component = findByTestAttr(wrapper, "component-congrats");
   expect(component.text()).toBe("");
 });
 
-test("renders non-empty congrats message when `success` prop is true", () => {
+test("renders non-empty congrats message when `success` is true", () => {
   const wrapper = setup({ success: true });
   const message = findByTestAttr(wrapper, "congrats-message");
   expect(message.text().length).not.toBe(0);
-});
-
-test("does not throw warning with expected props", () => {
-  const expectedProps = { success: false, secretWord: "" };
-  const wrapper = setup(expectedProps);
-  checkProps(wrapper, expectedProps);
-});
-
-test("success message shows the success word", () => {
-  const secretWord = "party";
-  const wrapper = setup({ success: true, secretWord });
-  const message = findByTestAttr(wrapper, "congrats-message");
-  expect(message.text()).toContain(secretWord);
-});
-
-test("give up shows the secret word and warning", () => {
-  const secretWord = "party";
-  const wrapper = setup({ secretWord, giveUp: true });
-
-  const message = findByTestAttr(wrapper, "giveup-message");
-  expect(message.text()).toContain(secretWord);
 });

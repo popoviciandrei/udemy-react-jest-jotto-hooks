@@ -8,20 +8,19 @@ const defaultProps = {
   guessedWords: [{ guessedWord: "train", letterMatchCount: 3 }]
 };
 
-const setup = (props = {}) => {
-  const setupProps = { ...defaultProps, ...props };
-  return shallow(<GuessedWords {...setupProps} />);
+/**
+ * @function setup
+ * @param {array } guessedWords - guessedWords value
+ */
+const setup = (guessedWords = []) => {
+  return shallow(<GuessedWords guessedWords={guessedWords} />);
 };
-
-test("does not throw warning with expected props", () => {
-  checkProps(GuessedWords, defaultProps);
-});
 
 describe("if there are no words guessed", () => {
   let wrapper;
   // define wrapper that will be used by each sub test
   beforeEach(() => {
-    wrapper = setup({ guessedWords: [] });
+    wrapper = setup([]);
   });
 
   test("renders without errors", () => {
@@ -49,7 +48,7 @@ describe("if there are words guessed", () => {
   ];
 
   beforeEach(() => {
-    wrapper = setup({ guessedWords });
+    wrapper = setup(guessedWords);
   });
 
   test("renders without error", () => {
@@ -80,7 +79,7 @@ describe("if there are words guessed", () => {
 
 describe("languagePicker", () => {
   test("correctly renders gues instructions string in english by default", () => {
-    const wrapper = setup({ guessedWords: [] });
+    const wrapper = setup([]);
     const guessInstructions = findByTestAttr(wrapper, "guess-instructions");
     expect(guessInstructions.text()).toBe("Try to guess the secret word!");
   });
