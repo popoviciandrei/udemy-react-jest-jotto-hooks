@@ -1,19 +1,21 @@
 import React from "react";
-import { shallow } from "enzyme";
-import { checkProps, findByTestAttr } from "../test/testUtils";
-import GuessedWords from "./GuessedWords";
-import TestRunner from "jest-runner";
 
-const defaultProps = {
-  guessedWords: [{ guessedWord: "train", letterMatchCount: 3 }]
-};
+import { shallow } from "enzyme";
+import { findByTestAttr } from "../test/testUtils";
+import GuessedWords from "GuessedWords";
+
+import guessedWordsContext from "./contexts/guessedWordsContext";
 
 /**
  * @function setup
  * @param {array } guessedWords - guessedWords value
  */
 const setup = (guessedWords = []) => {
-  return shallow(<GuessedWords guessedWords={guessedWords} />);
+  const mockUseGuessedWords = jest
+    .fn()
+    .mockReturnValue([guessedWords, jest.fn()]);
+  guessedWordsContext.useGuessedWords = mockUseGuessedWords;
+  return shallow(<GuessedWords />);
 };
 
 describe("if there are no words guessed", () => {
@@ -87,7 +89,7 @@ describe("languagePicker", () => {
     const mockUseContext = jest.fn().mockReturnValue("emoji");
     React.useContext = mockUseContext;
 
-    const wrapper = setup({ guessedWords: [] });
+    const wrapper = setup();
     const guessInstructions = findByTestAttr(wrapper, "guess-instructions");
     expect(guessInstructions.text()).toBe("🤔🤫🔤");
   });
